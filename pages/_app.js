@@ -1,21 +1,69 @@
 import App from 'next/app';
+import { parseCookies, destroyCookie } from 'nookies';
+import axios from 'axios';
+import Router from 'next/router';
 import Layout from '../components/_App/Layout';
+import { redirectUser } from '../utils/auth';
+import baseUrl from '../utils/baseUrl';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
+    const { token } = parseCookies(ctx);
+
     let pageProps = {};
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
 
+    if (!token) {
+      const isProtectedRoute =
+        ctx.pathname === '/account' || ctx.pathname === '/create';
+      if (isProtectedRoute) {
+        redirectUser(ctx, '/login');
+      }
+    } else {
+      try {
+        const payload = { headers: { Authorization: token } };
+        const url = `${baseUrl}/api/account`;
+        const response = await axios.get(url, payload);
+        const user = response.data;
+        const isRoot = user.role === 'root';
+        const isAdmin = user.role === 'admin';
+        // redirect from create page if 'user' but not 'admin' or 'root' role
+        const isNotPermitted =
+          !(isRoot || isAdmin) && ctx.pathname === '/create';
+        if (isNotPermitted) {
+          redirectUser(ctx, '/');
+        }
+        pageProps.user = user;
+      } catch (error) {
+        console.error('Error getting current user.', error);
+        // 1) Throw out invalid token
+        destroyCookie(ctx, 'token');
+        // 2) Redirect to login
+        redirectUser(ctx, 'login');
+      }
+    }
+
     return { pageProps };
   }
+
+  componentDidMount() {
+    window.addEventListener('storage', this.syncLogout);
+  }
+
+  syncLogout = event => {
+    if (event.key === 'logout') {
+      console.log('Logged out from storage.');
+      Router.push('/login');
+    }
+  };
 
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <Layout>
+      <Layout {...pageProps}>
         <Component {...pageProps} />
       </Layout>
     );
