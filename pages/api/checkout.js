@@ -12,10 +12,7 @@ export default async (req, res) => {
 
   try {
     // 1) Verify and get user id from token
-    const { userId } = jwt.verify(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
+    const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     // 2) Find cart based on user id and populate it
     const cart = await Cart.findOne({ user: userId }).populate({
       path: 'products.product',
@@ -37,8 +34,7 @@ export default async (req, res) => {
         source: paymentData.id
       });
     }
-    const customer =
-      (isExistingCustomer && prevCustomer.data[0].id) || newCustomer.id;
+    const customer = (isExistingCustomer && prevCustomer.data[0].id) || newCustomer.id;
     // 6) Create charge with total, send receipt email
     const charge = await stripe.charges.create(
       {

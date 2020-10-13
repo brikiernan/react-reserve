@@ -5,6 +5,8 @@ import Router from 'next/router';
 import Layout from '../components/_App/Layout';
 import { redirectUser } from '../utils/auth';
 import baseUrl from '../utils/baseUrl';
+import '../public/nprogress.css';
+import '../public/styles.css';
 
 class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -17,8 +19,7 @@ class MyApp extends App {
     }
 
     if (!token) {
-      const isProtectedRoute =
-        ctx.pathname === '/account' || ctx.pathname === '/create';
+      const isProtectedRoute = ctx.pathname === '/account' || ctx.pathname === '/create';
       if (isProtectedRoute) {
         redirectUser(ctx, '/login');
       }
@@ -31,8 +32,7 @@ class MyApp extends App {
         const isRoot = user.role === 'root';
         const isAdmin = user.role === 'admin';
         // redirect from create page if 'user' but not 'admin' or 'root' role
-        const isNotPermitted =
-          !(isRoot || isAdmin) && ctx.pathname === '/create';
+        const isNotPermitted = !(isRoot || isAdmin) && ctx.pathname === '/create';
         if (isNotPermitted) {
           redirectUser(ctx, '/');
         }

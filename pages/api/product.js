@@ -52,10 +52,7 @@ async function handleDeleteRequest(req, res) {
     // 1) Delete product by id
     await Product.findOneAndDelete({ _id });
     // 2) Remove product from all carts, referenced as 'product'
-    await Cart.updateMany(
-      { 'products.product': _id },
-      { $pull: { products: { product: _id } } }
-    );
+    await Cart.updateMany({ 'products.product': _id }, { $pull: { products: { product: _id } } });
     res.status(204).json({});
   } catch (error) {
     console.error(error);

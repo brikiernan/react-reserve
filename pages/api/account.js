@@ -23,10 +23,7 @@ async function handleGetRequest(req, res) {
   }
 
   try {
-    const { userId } = jwt.verify(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
+    const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     const user = await User.findOne({ _id: userId });
     if (user) {
       res.status(200).json(user);

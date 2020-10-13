@@ -1,14 +1,5 @@
 import { Fragment } from 'react';
-import {
-  Header,
-  Icon,
-  Segment,
-  Button,
-  Accordion,
-  Label,
-  List,
-  Image
-} from 'semantic-ui-react';
+import { Header, Icon, Segment, Button, Accordion, Label, List, Image } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 import formatDate from '../../utils/formatDate';
 
@@ -19,16 +10,16 @@ export default function AccountOrders({ orders }) {
     return orders.map(order => ({
       key: order._id,
       title: {
-        content: <Label color="blue" content={formatDate(order.createdAt)} />
+        content: <Label color='blue' content={formatDate(order.createdAt)} />
       },
       content: {
         content: (
           <Fragment>
-            <List.Header as="h3">
+            <List.Header as='h3'>
               Total: ${order.total}
               <Label
                 content={order.email}
-                icon="mail"
+                icon='mail'
                 basic
                 horizontal
                 style={{ marginLeft: '1em' }}
@@ -44,8 +35,8 @@ export default function AccountOrders({ orders }) {
                       qty: {p.quantity} @ ${p.product.price} ea.
                     </List.Description>
                   </List.Content>
-                  <List.Content floated="right">
-                    <Label tag color="red" size="tiny">
+                  <List.Content floated='right'>
+                    <Label tag color='red' size='tiny'>
                       {p.product.sku}
                     </Label>
                   </List.Content>
@@ -60,29 +51,24 @@ export default function AccountOrders({ orders }) {
 
   return (
     <Fragment>
-      <Header as="h2">
-        <Icon name="folder open" />
+      <Header as='h2'>
+        <Icon name='folder open' />
         Order History
       </Header>
       {orders.length === 0 ? (
-        <Segment inverted tertiary color="grey" textAlign="center">
+        <Segment inverted tertiary color='grey' textAlign='center'>
           <Header icon>
-            <Icon name="copy outline" />
+            <Icon name='copy outline' />
             No past orders.
           </Header>
           <div>
-            <Button onClick={() => router.push('/')} color="orange">
+            <Button onClick={() => router.push('/')} color='orange'>
               View Products
             </Button>
           </div>
         </Segment>
       ) : (
-        <Accordion
-          fluid
-          styled
-          exclusive={false}
-          panels={mapOrdersToPanels(orders)}
-        />
+        <Accordion fluid styled exclusive={false} panels={mapOrdersToPanels(orders)} />
       )}
     </Fragment>
   );

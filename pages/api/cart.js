@@ -29,10 +29,7 @@ async function handleGetRequest(req, res) {
     return res.status(401).send('No authorization token.');
   }
   try {
-    const { userId } = jwt.verify(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
+    const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     const cart = await Cart.findOne({ user: userId }).populate({
       path: 'products.product',
       model: 'Product'
@@ -50,16 +47,11 @@ async function handlePutRequest(req, res) {
     return res.status(401).send('No authorization token.');
   }
   try {
-    const { userId } = jwt.verify(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
+    const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     // 1) Get user cart based on userId
     const cart = await Cart.findOne({ user: userId });
     // 2) Check if product exists in cart already
-    const productExists = cart.products.some(doc =>
-      ObjectId(productId).equals(doc.product)
-    );
+    const productExists = cart.products.some(doc => ObjectId(productId).equals(doc.product));
     // 3) -- If so, increment quanity (by number provided to request)
     if (productExists) {
       await Cart.findOneAndUpdate(
@@ -69,10 +61,7 @@ async function handlePutRequest(req, res) {
     } else {
       // 4) -- If not, add new product with given quanity to cart
       const newProduct = { quantity, product: productId };
-      await Cart.findOneAndUpdate(
-        { _id: cart._id },
-        { $addToSet: { products: newProduct } }
-      );
+      await Cart.findOneAndUpdate({ _id: cart._id }, { $addToSet: { products: newProduct } });
     }
     res.status(200).send('Cart updated.');
   } catch (error) {
@@ -87,10 +76,7 @@ async function handleDeleteRequest(req, res) {
     return res.status(401).send('No authorization token.');
   }
   try {
-    const { userId } = jwt.verify(
-      req.headers.authorization,
-      process.env.JWT_SECRET
-    );
+    const { userId } = jwt.verify(req.headers.authorization, process.env.JWT_SECRET);
     const cart = await Cart.findOneAndUpdate(
       { user: userId },
       { $pull: { products: { product: productId } } },

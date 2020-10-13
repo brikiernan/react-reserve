@@ -1,11 +1,4 @@
-import {
-  Segment,
-  Header,
-  Icon,
-  Button,
-  Item,
-  Message
-} from 'semantic-ui-react';
+import { Segment, Header, Icon, Button, Item, Message } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 
 function CartItemList({ products, user, handleRemoveFromCart, success }) {
@@ -15,10 +8,7 @@ function CartItemList({ products, user, handleRemoveFromCart, success }) {
     return products.map(p => ({
       childKey: p.product._id,
       header: (
-        <Item.Header
-          as="a"
-          onClick={() => router.push(`/product?_id=${p.product._id}`)}
-        >
+        <Item.Header as='a' onClick={() => router.push(`/product?_id=${p.product._id}`)}>
           {p.product.name}
         </Item.Header>
       ),
@@ -28,8 +18,8 @@ function CartItemList({ products, user, handleRemoveFromCart, success }) {
       extra: (
         <Button
           basic
-          icon="remove"
-          floated="right"
+          icon='remove'
+          floated='right'
           onClick={() => handleRemoveFromCart(p.product._id)}
         />
       )
@@ -40,27 +30,27 @@ function CartItemList({ products, user, handleRemoveFromCart, success }) {
     return (
       <Message
         success
-        header="Success!"
-        content="Your order and payment has been accepted."
-        icon="star outline"
+        header='Success!'
+        content='Your order and payment has been accepted.'
+        icon='star outline'
       />
     );
   }
 
   if (products.length === 0) {
     return (
-      <Segment secondary color="teal" inverted textAlign="center" placeholder>
+      <Segment secondary color='teal' inverted textAlign='center' placeholder>
         <Header icon>
-          <Icon name="shopping basket" />
+          <Icon name='shopping basket' />
           No products in your cart.
         </Header>
         <div>
           {user ? (
-            <Button color="orange" onClick={() => router.push('/')}>
+            <Button color='orange' onClick={() => router.push('/')}>
               View Products
             </Button>
           ) : (
-            <Button color="blue" onClick={() => router.push('/login')}>
+            <Button color='blue' onClick={() => router.push('/login')}>
               Login to Add Products
             </Button>
           )}

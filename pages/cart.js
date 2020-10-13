@@ -48,11 +48,7 @@ function Cart({ products, user }) {
         products={cartProducts}
         success={success}
       />
-      <CartSummary
-        products={cartProducts}
-        success={success}
-        handleCheckout={handleCheckout}
-      />
+      <CartSummary products={cartProducts} success={success} handleCheckout={handleCheckout} />
     </Segment>
   );
 }

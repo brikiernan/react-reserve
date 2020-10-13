@@ -12,14 +12,7 @@ function ProductList({ products }) {
       href: `/product?_id=${product._id}`
     }));
   }
-  return (
-    <Card.Group
-      stackable
-      itemsPerRow="three"
-      centered
-      items={mapProductsToItems(products)}
-    />
-  );
+  return <Card.Group stackable itemsPerRow='three' centered items={mapProductsToItems(products)} />;
 }
 
 export default ProductList;

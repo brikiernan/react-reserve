@@ -22,8 +22,8 @@ export default function AccountPermissions() {
 
   return (
     <div style={{ margin: '2em 0' }}>
-      <Header as="h2">
-        <Icon name="settings" />
+      <Header as='h2'>
+        <Icon name='settings' />
         User Permissions
       </Header>
       <Table compact celled definition>

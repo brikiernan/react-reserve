@@ -48,48 +48,48 @@ function Login() {
     <React.Fragment>
       <Message
         attached
-        icon="privacy"
-        header="Welcome Back!"
-        content="Log in with email and password."
-        color="blue"
+        icon='privacy'
+        header='Welcome Back!'
+        content='Log in with email and password.'
+        color='blue'
       />
       <Form error={Boolean(error)} loading={loading} onSubmit={handleSubmit}>
-        <Message error header="Oops!" content={error} />
+        <Message error header='Oops!' content={error} />
         <Segment>
           <Form.Input
             fluid
-            icon="envelope"
-            iconPosition="left"
-            label="Email"
-            placeholder="Email"
-            name="email"
-            type="email"
+            icon='envelope'
+            iconPosition='left'
+            label='Email'
+            placeholder='Email'
+            name='email'
+            type='email'
             value={user.email}
             onChange={handleChange}
           />
           <Form.Input
             fluid
-            icon="lock"
-            iconPosition="left"
-            label="Password"
-            placeholder="Password"
-            name="password"
-            type="password"
+            icon='lock'
+            iconPosition='left'
+            label='Password'
+            placeholder='Password'
+            name='password'
+            type='password'
             value={user.password}
             onChange={handleChange}
           />
           <Button
-            icon="sign in"
-            type="submit"
-            color="orange"
-            content="Log In"
+            icon='sign in'
+            type='submit'
+            color='orange'
+            content='Log In'
             disabled={disabled || loading}
           />
         </Segment>
       </Form>
-      <Message attached="bottom" warning>
+      <Message attached='bottom' warning>
         <strong>New user?</strong>
-        <Link href="/signup">
+        <Link href='/signup'>
           <a style={{ marginLeft: '0.5em' }}>Sign Up Here</a>
         </Link>
       </Message>

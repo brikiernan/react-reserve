@@ -40,9 +40,9 @@ function AddProductToCart({ user, productId }) {
 
   return (
     <Input
-      type="number"
-      min="1"
-      placeholder="Quantity"
+      type='number'
+      min='1'
+      placeholder='Quantity'
       value={quantity}
       onChange={e => setQuantity(Number(e.target.value))}
       action={
